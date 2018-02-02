@@ -38,7 +38,17 @@ export const shoppingList = (state=initialState, action) => {
             });
 
         case types.SHOPPINGLIST_DETAIL_ERROR:
-            return action.payload
+            return action.payload;
+
+        case types.UPDATE_SHOPPINGLIST:
+            return Object.assign({}, state, {
+                shlDetail: action.payload.data.data,
+                success_message: action.payload.data.message
+            });
+
+        case types.UPDATE_SHOPPINGLIST_ERROR:
+            console.log('UPDATE ERROR', action.payload);
+            return state;
 
         default:
             return state
