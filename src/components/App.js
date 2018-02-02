@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import List from '../containers/shoppinglist/List';
 import SignUp from '../containers/auth/Signup';
 import Login from '../containers/auth/Login';
 import Logout from '../containers/auth/Logout';
+
+import List from '../containers/shoppinglist/List';
 import CreateShoppingList from '../containers/shoppinglist/Create';
 import ShoppingListDetail from '../containers/shoppinglist/Detail';
 import EditShoppingList from '../containers/shoppinglist/Edit';
+
+import CreateShoppingItem from '../containers/shoppingitems/Create';
 
 import AppLinks, { ShoppingListsLink } from './includes/AppLinks';
 
@@ -51,6 +54,7 @@ class App extends Component {
                         <Route path="/login" component={Login}/>
                         <Route path="/logout" component={Logout}/>
                         <Route path="/shoppinglists/create" component={CreateShoppingList}/>
+                        <Route path="/shoppinglists/:id/items/create" component={CreateShoppingItem}/>
                         <Route path="/shoppinglists/:id/edit" component={EditShoppingList}/>
                         <Route path="/shoppinglists/:id" component={ShoppingListDetail}/>
                         <Route path="/shoppinglists" component={List}/>

@@ -183,3 +183,31 @@ export const updateShoppingList = (history, id, new_data) => {
         }
 };
 
+export const createShoppingItem = (history, id, data) => {
+    const _prefix = '/shopping-lists';
+    const newData = new FormData();
+
+    newData.set('name', data.name);
+    newData.set('price', data.price);
+    newData.set('quantity_description', data.description);
+
+    let apiKey = localStorage.getItem('apiKey');
+
+    return dispatch => {
+        axios.post(
+            `${URL}${_prefix}/${id}/shopping-items`, newData, {
+                headers: {
+                    'Content-Type': DEFAULT_HEADER,
+                    'x-access-token': apiKey
+                }
+            })
+            .then(response => {
+                history.push(`/shoppinglists/${id}`);
+                dispatch(actions.createShoppingItemSuccess(response))
+            })
+            .catch(error => {
+                history.push(`/shoppinglists/${id}/items/create`);
+                dispatch(actions.createShoppingItemError(error))
+            })
+    }
+};

@@ -24,6 +24,17 @@ class ShoppingListDetailComponent extends React.Component {
                     {this.props.shoppingList.success_message}
                 </div>
             )
+        } else if (this.props.shoppingItem.success_message){
+            return (
+                <div className="alert alert-success alert-dismissible" role="alert">
+                    <button type="button"
+                            className="close"
+                            data-dismiss="alert"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    {this.props.shoppingItem.success_message}
+                </div>
+            )
         }
     };
 
@@ -110,8 +121,8 @@ class ShoppingListDetailComponent extends React.Component {
     }
 }
 
-const mapStateToProps = ({shoppingList}) => {
-    return {shoppingList}
+const mapStateToProps = ({shoppingList, shoppingItem}) => {
+    return {shoppingList, shoppingItem}
 }
 
 const mapDispatchToProps = dispatch => {

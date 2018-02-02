@@ -1,6 +1,6 @@
 import * as types from './ActionTypes'
 
-
+// AUTHENTICATION ACTION CREATORS
 export const RegisterUserSuccess = response => {
     return {
         type: types.SIGNUP,
@@ -46,6 +46,7 @@ export const LogoutUserError = error => {
     }
 }
 
+// SHOPPING LISTS ACTION CREATORS
 export const createShoppingListSuccess = response => {
     return {
         type: types.CREATE_SHOPPINGLIST,
@@ -100,6 +101,21 @@ export const updateShoppingListError = error => {
     return {
         type: types.UPDATE_SHOPPINGLIST_ERROR,
         payload: error.response
+    }
+};
+
+// SHOPPING ITEMS ACTION CREATORS
+export const createShoppingItemSuccess = response => {
+    return {
+        type: types.CREATE_SHOPPING_ITEM,
+        payload: response
+    }
+};
+
+export const createShoppingItemError = error => {
+    return {
+        type: types.CREATE_SHOPPING_ITEM_ERROR,
+        payload: error.response.data
     }
 };
 
@@ -158,27 +174,4 @@ export const updateShoppingListError = error => {
 //     }
 // };
 //
-// export const createShoppingItem = (id, data) => {
-//     const _prefix = '/shopping-lists';
-//     const newData = new FormData();
-//
-//     newData.set('name', data.name);
-//     newData.set('price', data.price);
-//     newData.set('quantity_description', data.description);
-//
-//     let apiKey = localStorage.getItem('apiKey');
-//
-//     const request = axios.post(
-//         `${URL}${_prefix}/${id}/shopping-items`, newData, {
-//             headers: {
-//                 'Content-Type': DEFAULT_HEADER,
-//                 'x-access-token': apiKey
-//             }
-//         });
-//
-//     return {
-//         type: actions.CREATE_SHOPPING_ITEM,
-//         payload: request
-//     }
-// };
-//
+
