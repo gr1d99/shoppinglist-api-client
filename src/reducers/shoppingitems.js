@@ -2,30 +2,29 @@ import * as types from '../actions/ActionTypes'
 
 export const initialState = {
     error_messages: '',
-    error_message: '',
-    success_message: '',
-    shlItemDetail: {}
+    shlItemDetail: {},
+    items: []
 }
 
-export const shoppingItem = (state=initialState, action) => {
+export const shoppingItemReducer = (state=initialState, action) => {
     switch (action.type){
         case types.CREATE_SHOPPING_ITEM:
-            return Object.assign({}, state, {
-                success_message: action.payload.data.message,
-                error_messages: '',
-                error_message: ''
-            });
+            return {};
 
         case types.CREATE_SHOPPING_ITEM_ERROR:
-            if (action.payload.message) {
-                return Object.assign({}, state, {
-                    error_message: action.payload.message
-                })
-            } else {
-                return Object.assign({}, state, {
-                    error_messages: action.payload
-                })
-            }
+            return Object.assign({}, state, {
+                error_messages: action.payload,
+            });
+
+        case types.FETCH_SHOPPING_ITEMS:
+            return Object.assign({}, state, {
+                error_messages: '',
+                shlItemDetail: {},
+                items: action.payload.data
+            });
+
+        case types.FETCH_SHOPPING_ITEMS_ERROR:
+            return action.payload;
 
         default:
             return state
