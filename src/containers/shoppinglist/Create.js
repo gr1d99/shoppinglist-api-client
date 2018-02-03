@@ -48,21 +48,6 @@ class CreateShoppingList extends React.Component {
         }
     };
 
-    displayAlerts = () => {
-        if (this.props.shoppingList.error_message) {
-            return (
-                <div className="alert alert-warning alert-dismissible" role="alert">
-                    <button type="button"
-                            className="close"
-                            data-dismiss="alert"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    {this.props.shoppingList.error_message}
-                </div>
-            )
-        }
-    };
-
     render () {
         return (
             <div>
@@ -70,8 +55,6 @@ class CreateShoppingList extends React.Component {
                     <div className="thumbnail shoppinglist-create">
 
                         <h3 className="text-center">Create new Shopping List</h3>
-
-                        { this.displayAlerts() }
 
                         <form className="form shoppinglist-create" onSubmit={this.handleSubmit}>
                             <div className="form-group">
@@ -118,7 +101,7 @@ const mapStateToProps = ({shoppingList}) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        createShoppingList: bindActionCreators(createShoppingList, dispatch)
+        createShoppingList: bindActionCreators(createShoppingList, dispatch),
     }
 };
 

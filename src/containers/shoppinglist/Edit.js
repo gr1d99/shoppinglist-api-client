@@ -4,7 +4,6 @@ import { bindActionCreators } from "redux";
 
 import { updateShoppingList, getUserShoppingListDetail } from "../../dispatchers/index";
 
-
 class EditShoppingList extends React.Component {
     constructor(props) {
         super(props);

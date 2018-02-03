@@ -12,22 +12,6 @@ class List extends React.Component {
         this.props.getUserShoppingLists(this.props.history)
     }
 
-
-    displayAlerts = () => {
-        if (this.props.shoppingList.success_message) {
-            return (
-                <div className="alert alert-success alert-dismissible" role="alert">
-                    <button type="button"
-                            className="close"
-                            data-dismiss="alert"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    {this.props.shoppingList.success_message}
-                </div>
-            )
-        }
-    };
-
     renderShoppingLists = () => {
         if (this.props.shoppingList.shopping_lists) {
             return this.props.shoppingList.shopping_lists.map(
@@ -50,14 +34,11 @@ class List extends React.Component {
                 }
             )
         }
-    }
+    };
 
     render () {
         return (
             <div className="row">
-                <div className="col-sm-12">
-                    {this.displayAlerts()}
-                </div>
                 <div className="create-link text-center">
                     <Link className="btn btn-success btn-xs" to="shoppinglists/create"><span className="glyphicon glyphicon-plus-sign"></span> Add new</Link>
                     <br/>

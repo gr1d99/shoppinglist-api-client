@@ -52,7 +52,6 @@ class CreateShoppingItem extends React.Component {
     };
 
     render () {
-        console.log(this.props.shoppingItem)
         return (
             <div>
                 <div className="col-sm-6 col-sm-offset-3">

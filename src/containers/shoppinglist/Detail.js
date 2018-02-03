@@ -12,32 +12,6 @@ class ShoppingListDetailComponent extends React.Component {
         this.props.getUserShoppingListDetail(this.props.history, shlId)
     };
 
-    displaySuccessAlerts = () => {
-        if (this.props.shoppingList.success_message) {
-            return (
-                <div className="alert alert-success alert-dismissible" role="alert">
-                    <button type="button"
-                            className="close"
-                            data-dismiss="alert"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    {this.props.shoppingList.success_message}
-                </div>
-            )
-        } else if (this.props.shoppingItem.success_message){
-            return (
-                <div className="alert alert-success alert-dismissible" role="alert">
-                    <button type="button"
-                            className="close"
-                            data-dismiss="alert"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    {this.props.shoppingItem.success_message}
-                </div>
-            )
-        }
-    };
-
     render() {
 
         if (this.props.shoppingList.shlDetail) {
@@ -52,8 +26,6 @@ class ShoppingListDetailComponent extends React.Component {
             return (
                 <div>
 
-                    {this.displaySuccessAlerts()}
-
                     <h3 className="page-header text-center">{ name }</h3>
 
                     <div className="well">
@@ -61,7 +33,7 @@ class ShoppingListDetailComponent extends React.Component {
                         <hr/>
                         <Link
                             className="btn btn-info btn-xs"
-                            to={`/shoppinglists/${this.props.match.params.id}/edit`}>
+                            to={`/shoppinglists/${this.props.match.params.id}/items`}>
                             View Items
                         </Link>
                     </div>
