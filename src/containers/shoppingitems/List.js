@@ -30,12 +30,12 @@ class List extends React.Component {
                             <td>
                                 <Link id="btn edit-item"
                                       className='btn btn-info btn-xs'
-                                      to={`../../shoppinglist/${shlId}/items/${id}/edit`}>
+                                      to={`../../shoppinglists/${shlId}/items/${id}/edit`}>
                                     Edit
                                 </Link>
                                 <Link id="btn edit-delete"
                                       className='btn btn-danger btn-xs'
-                                      to={`../../shoppinglist/${shlId}/items/${id}/delete`}>
+                                      to={`../../shoppinglists/${shlId}/items/${id}/delete`}>
                                     Delete
                                 </Link>
                             </td>
