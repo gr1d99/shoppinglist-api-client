@@ -119,8 +119,48 @@ export const createShoppingItemError = error => {
     }
 };
 
+export const fetchShoppingItemsSuccess = response => {
+    return {
+        type: types.FETCH_SHOPPING_ITEMS,
+        payload: response
+    }
+};
+
+export const fetchShoppingItemsError = error => {
+    return {
+        type: types.FETCH_SHOPPING_ITEMS_ERROR,
+        payload: error.response.data
+    }
+};
 
 
+// ALERTS ACTION CREATORS
+export const successfulOperation = response => {
+    return {
+        type: types.SUCCESS_ALERT,
+        payload: response.data.message
+    }
+}
+
+export const suspiciousOperation = error => {
+    return {
+        type: types.WARNING_ALERT,
+        payload: error.response.data.message
+    }
+}
+
+export const failedOperation = error => {
+    return {
+        type: types.ERROR_ALERT,
+        payload: error.response.data.message
+    }
+}
+
+export const clearAlertMessage = () => {
+    return {
+        type: types.CLEAR_ALERT
+    }
+}
 
 
 // export const getUserInfo = () => {
@@ -141,7 +181,7 @@ export const createShoppingItemError = error => {
 //     }
 // };
 //
-// // Shopping List CRUD action creators
+// // Shopping ShoppingList CRUD action creators
 //
 
 
