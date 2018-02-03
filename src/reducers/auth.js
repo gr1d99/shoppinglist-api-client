@@ -4,7 +4,6 @@ let _auth = !(localStorage.getItem('apiKey') === null);
 
 const Authenticate = (
     state={isAuthenticated: _auth}, action) => {
-    console.log(action.type)
     switch (action.type) {
         case types.LOGIN:
             return Object.assign({}, state, {
