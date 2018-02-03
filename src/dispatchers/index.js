@@ -70,7 +70,7 @@ export const LogoutUser = (history) => {
                 }
             })
             .then(response => {
-                dispatch(actions.LogoutUserSuccess(response))
+                dispatch(actions.LogoutUserSuccess(response));
                 history.push('/');
                 window.location.reload()
             })
@@ -101,12 +101,14 @@ export const createShoppingList = (history, data) => {
                 }
             })
             .then(response => {
-                const newId = response.data.data.id;
+                // const newId = response.data.data.id;
                 dispatch(actions.createShoppingListSuccess(response));
+                dispatch(actions.successfulOperation(response))
                 history.push(`/shoppinglists`)
             })
             .catch(error => {
                 dispatch(actions.createShoppingListError(error));
+                error.response.data.message && dispatch(actions.failedOperation(error));
                 history.push(`/shoppinglists/create`)
             })
     }
@@ -149,7 +151,7 @@ export const getUserShoppingListDetail = (history, id) => {
                 dispatch(actions.getUserShoppingListSuccess(response))
             })
             .catch(error => {
-                dispatch(actions.getUserShoppingListError(error))
+                dispatch(actions.getUserShoppingListError(error));
                 history.push('/shoppinglists')
             })
     }
@@ -174,11 +176,14 @@ export const updateShoppingList = (history, id, new_data) => {
                 })
                 .then(response => {
                     history.push(`/shoppinglists/${id}`);
-                    dispatch(actions.updateShoppingListSuccess(response))
+                    dispatch(actions.updateShoppingListSuccess(response));
+                    dispatch(actions.successfulOperation(response))
+
                 })
                 .catch(error => {
-                    history.push(`/shoppinglists/${id}`);
-                    dispatch(actions.updateShoppingListError(error))
+                    history.push(`/shoppinglists/${id}/edit`);
+                    dispatch(actions.updateShoppingListError(error));
+                    error.response.data.message && dispatch(actions.failedOperation(error));
                 });
         }
 };
@@ -189,7 +194,9 @@ export const createShoppingItem = (history, id, data) => {
 
     newData.set('name', data.name);
     newData.set('price', data.price);
-    newData.set('quantity_description', data.description);
+    newData.set('quantity_description', data.quantity);
+
+
 
     let apiKey = localStorage.getItem('apiKey');
 
@@ -203,11 +210,39 @@ export const createShoppingItem = (history, id, data) => {
             })
             .then(response => {
                 history.push(`/shoppinglists/${id}`);
-                dispatch(actions.createShoppingItemSuccess(response))
+                dispatch(actions.createShoppingItemSuccess(response));
+                dispatch(actions.successfulOperation(response))
             })
             .catch(error => {
                 history.push(`/shoppinglists/${id}/items/create`);
-                dispatch(actions.createShoppingItemError(error))
+                dispatch(actions.createShoppingItemError(error));
+                error.response.data.message && dispatch(actions.failedOperation(error));
+            })
+    }
+};
+
+
+export const fetchShoppingItems = (history, id) => {
+    const _prefix = '/shopping-lists';
+    let apiKey = localStorage.getItem('apiKey');
+
+    return dispatch => {
+        axios.get(
+            `${URL}${_prefix}/${id}/shopping-items`, {
+                headers: {
+                    'Content-Type': DEFAULT_HEADER,
+                    'x-access-token': apiKey
+                }
+            })
+            .then(response => {
+                history.push(`/shoppinglists/${id}/items`);
+                dispatch(actions.fetchShoppingItemsSuccess(response));
+                dispatch(actions.successfulOperation(response))
+            })
+            .catch(error => {
+                history.push(`/shoppinglists/${id}`);
+                dispatch(actions.fetchShoppingItemsError(error));
+                error.response.data.message && dispatch(actions.failedOperation(error));
             })
     }
 };
