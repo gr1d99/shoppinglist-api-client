@@ -2,23 +2,27 @@ import React, { Component } from 'react';
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import AlertMessages from '../containers/utils/messages'
+
 import SignUp from '../containers/auth/Signup';
 import Login from '../containers/auth/Login';
 import Logout from '../containers/auth/Logout';
 
-import List from '../containers/shoppinglist/List';
+import ShoppingList from '../containers/shoppinglist/List';
 import CreateShoppingList from '../containers/shoppinglist/Create';
 import ShoppingListDetail from '../containers/shoppinglist/Detail';
 import EditShoppingList from '../containers/shoppinglist/Edit';
 
 import CreateShoppingItem from '../containers/shoppingitems/Create';
+import ShoppingItems from '../containers/shoppingitems/List';
 
 import AppLinks, { ShoppingListsLink } from './includes/AppLinks';
 
 import '../static/App.css';
 
 class App extends Component {
-  render() {
+
+    render() {
     return (
         <BrowserRouter>
             <div>
@@ -48,16 +52,20 @@ class App extends Component {
                     </div>
                 </nav>
                 <div className="container">
+                    <div className="col-md-12">
+                        <AlertMessages/>
+                    </div>
                     <Switch>
                         <Route exact path="/" component={() => ('')}/>
                         <Route path="/signup" component={SignUp}/>
                         <Route path="/login" component={Login}/>
                         <Route path="/logout" component={Logout}/>
-                        <Route path="/shoppinglists/create" component={CreateShoppingList}/>
                         <Route path="/shoppinglists/:id/items/create" component={CreateShoppingItem}/>
+                        <Route path="/shoppinglists/:id/items" component={ShoppingItems}/>
                         <Route path="/shoppinglists/:id/edit" component={EditShoppingList}/>
                         <Route path="/shoppinglists/:id" component={ShoppingListDetail}/>
-                        <Route path="/shoppinglists" component={List}/>
+                        <Route path="/shoppinglists/create" component={CreateShoppingList}/>
+                        <Route path="/shoppinglists" component={ShoppingList}/>
                     </Switch>
                 </div>
             </div>
@@ -66,8 +74,8 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({auth, shoppingList}) => {
-    return {auth, shoppingList}
+const mapStateToProps = ({auth, shoppingList, alerts}) => {
+    return {auth, shoppingList, alerts}
 };
 
 export default connect(mapStateToProps, null)(App)
