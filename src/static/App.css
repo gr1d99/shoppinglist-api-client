@@ -1,8 +1,18 @@
-form.signup-form, form.shoppinglist-create, form.shoppinglist-edit{
+#btn\ edit-delete {
+    left: 10px;
+}
+
+form.signup-form,
+form.shoppinglist-create,
+form.shoppinglist-edit,
+form.shopping-item-create{
     padding: 40px;
 }
 
-.thumbnail.signup, .thumbnail.shoppinglist-create, .thumbnail.shoppinglist-edit{
+.thumbnail.signup,
+.thumbnail.shoppinglist-create,
+.thumbnail.shoppinglist-edit,
+.thumbnail.shopping-item-create{
     margin-top: 100px;
 }
 
