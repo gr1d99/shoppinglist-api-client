@@ -15,6 +15,7 @@ import EditShoppingList from '../containers/shoppinglist/Edit';
 
 import CreateShoppingItem from '../containers/shoppingitems/Create';
 import ShoppingItems from '../containers/shoppingitems/List';
+import EdiShoppingItem from '../containers/shoppingitems/Edit';
 
 import AppLinks, { ShoppingListsLink } from './includes/AppLinks';
 
@@ -60,6 +61,7 @@ class App extends Component {
                         <Route path="/signup" component={SignUp}/>
                         <Route path="/login" component={Login}/>
                         <Route path="/logout" component={Logout}/>
+                        <Route path="/shoppinglists/:id/items/:id/edit" component={EdiShoppingItem}/>
                         <Route path="/shoppinglists/:id/items/create" component={CreateShoppingItem}/>
                         <Route path="/shoppinglists/:id/items" component={ShoppingItems}/>
                         <Route path="/shoppinglists/:id/edit" component={EditShoppingList}/>
