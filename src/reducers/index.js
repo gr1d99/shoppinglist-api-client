@@ -1,7 +1,13 @@
 import { combineReducers } from 'redux';
 
 import auth from './auth';
-import { shoppingList } from './shoppinglists';
-import { shoppingItem} from "./shoppingitems";
+import { shoppingListReducer } from './shoppinglists';
+import { shoppingItemReducer} from "./shoppingitems";
+import { alertsReducer } from "./alerts";
 
-export default combineReducers({auth, shoppingList, shoppingItem});
+export default combineReducers({
+    auth,
+    shoppingList: shoppingListReducer,
+    shoppingItem: shoppingItemReducer,
+    alerts: alertsReducer
+});
