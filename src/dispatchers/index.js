@@ -206,6 +206,35 @@ export const resetUserPassword = (history, data) => {
     }
 };
 
+export const deleteUserAccount = (history) => {
+    const _prefix = '/auth/users';
+
+    let apiKey = localStorage.getItem('apiKey');
+
+    return dispatch => {
+        axios.delete(
+            `${URL}${_prefix}`, {
+                headers: {
+                    'Content-Type': DEFAULT_HEADER,
+                    'x-access-token': apiKey
+                }
+            })
+            .then(response => {
+                history.push(`/login`);
+                dispatch(actions.deleteUserAccountSuccess(response));
+                dispatch(actions.successfulOperation(response.data.message));
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000)
+            })
+            .catch(error => {
+                history.push(`/`);
+                dispatch(actions.deleteUserAccountError(error));
+                error.response.data.message && dispatch(actions.failedOperation(error));
+            });
+    }
+};
+
 
 // shoppinglists
 export const createShoppingList = (history, data) => {
@@ -309,6 +338,33 @@ export const updateShoppingList = (history, id, new_data) => {
                 .catch(error => {
                     history.push(`/shoppinglists/${id}/edit`);
                     dispatch(actions.updateShoppingListError(error));
+                    error.response.data.message && dispatch(actions.failedOperation(error));
+                });
+        }
+};
+
+export const deleteShoppingList = (history, id) => {
+        const _prefix = '/shopping-lists';
+
+        let apiKey = localStorage.getItem('apiKey');
+
+        return dispatch => {
+            axios.delete(
+                `${URL}${_prefix}/${id}`, {
+                    headers: {
+                        'Content-Type': DEFAULT_HEADER,
+                        'x-access-token': apiKey
+                    }
+                })
+                .then(response => {
+                    history.push(`/shoppinglists`);
+                    dispatch(actions.deleteShoppingListSuccess(response));
+                    dispatch(actions.successfulOperation(response.data.message))
+
+                })
+                .catch(error => {
+                    history.push(`/shoppinglists/${id}`);
+                    dispatch(actions.deleteShoppingListError(error));
                     error.response.data.message && dispatch(actions.failedOperation(error));
                 });
         }
@@ -431,6 +487,33 @@ export const updateShoppingListItem = (history, shlId, itemId, new_data) => {
             .catch(error => {
                 history.push(`/shoppinglists/${shlId}/edit`);
                 dispatch(actions.updateShoppingItemsDetailError(error));
+                error.response.data.message && dispatch(actions.failedOperation(error));
+            });
+    }
+};
+
+export const deleteShoppingItem = (history, shlId, itemId) => {
+    const _prefix = '/shopping-lists';
+
+    let apiKey = localStorage.getItem('apiKey');
+
+    return dispatch => {
+        axios.delete(
+            `${URL}${_prefix}/${shlId}/shopping-items/${itemId}`, {
+                headers: {
+                    'Content-Type': DEFAULT_HEADER,
+                    'x-access-token': apiKey
+                }
+            })
+            .then(response => {
+                history.push(`/shoppinglists/${shlId}`);
+                dispatch(actions.deleteShoppingItemSuccess(response));
+                dispatch(actions.successfulOperation(response.data.message))
+
+            })
+            .catch(error => {
+                history.push(`/shoppinglists/${shlId}/items`);
+                dispatch(actions.deleteShoppingItemError(error));
                 error.response.data.message && dispatch(actions.failedOperation(error));
             });
     }

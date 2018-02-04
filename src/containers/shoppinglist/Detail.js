@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 
-import { getUserShoppingListDetail } from "../../dispatchers";
+import { getUserShoppingListDetail, deleteShoppingList } from "../../dispatchers";
 import { loginRequired } from "../auth/helpers";
 import { backButton } from "../../components/common/BackButton";
 
@@ -23,6 +23,13 @@ class ShoppingListDetailComponent extends React.Component {
             default:
                 return this.props.history.push('/login');
         }
+    };
+
+    handleDelete = (e) => {
+        e.preventDefault()
+        this.props.deleteShoppingList(
+            this.props.history,
+            this.props.match.params.id)
     };
 
     render() {
@@ -83,11 +90,10 @@ class ShoppingListDetailComponent extends React.Component {
                                         <span className="glyphicon glyphicon-pencil"></span> Edit
                                     </Link>
                                     <br/>
-                                    <Link
-                                        className="btn btn-danger btn-xs"
-                                        to={`/shoppinglists/${this.props.match.params.id}/delete`}>
+                                    <button
+                                        className="btn btn-danger btn-xs" onClick={this.handleDelete}>
                                         <span className="glyphicon glyphicon-trash"></span> Delete
-                                    </Link>
+                                    </button>
                                     <br/>
                                 </td>
                             </tr>
@@ -113,6 +119,7 @@ const mapStateToProps = ({shoppingList, shoppingItem, auth}) => {
 const mapDispatchToProps = dispatch => {
     return {
         getUserShoppingListDetail: bindActionCreators(getUserShoppingListDetail, dispatch),
+        deleteShoppingList: bindActionCreators(deleteShoppingList, dispatch),
     }
 }
 
