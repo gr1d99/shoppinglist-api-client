@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import { LogoutUser} from "../../dispatchers";
 import { loginRequired } from "./helpers";
+import { backButton } from "../../components/common/BackButton";
 
 class LogoutUserComponent extends React.Component {
 
@@ -12,7 +13,7 @@ class LogoutUserComponent extends React.Component {
     };
 
     getErrorMessage = () => {
-        console.log(this.props.auth)
+        console.log(this.props.auth);
         if (this.props.auth.login_errors) {
             if (this.props.auth.login_errors.message) {
                 return (
@@ -20,7 +21,7 @@ class LogoutUserComponent extends React.Component {
                 )
             }
         }
-    }
+    };
 
     render () {
         return (
@@ -46,4 +47,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(LogoutUserComponent))
+export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(backButton(LogoutUserComponent)))

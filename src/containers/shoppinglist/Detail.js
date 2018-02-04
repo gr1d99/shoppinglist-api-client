@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 
 import { getUserShoppingListDetail } from "../../dispatchers";
 import { loginRequired } from "../auth/helpers";
+import { backButton } from "../../components/common/BackButton";
 
 class ShoppingListDetailComponent extends React.Component {
 
@@ -115,4 +116,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(ShoppingListDetailComponent));
+export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(backButton(ShoppingListDetailComponent)));

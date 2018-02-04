@@ -1,10 +1,12 @@
 import React from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import SubmitButton  from '../../components/common/button';
 import { LoginUser } from "../../dispatchers";
 import { conditionedComponents } from "./helpers";
+import { backButton } from "../../components/common/BackButton";
 
 
 class Login extends React.Component {
@@ -45,12 +47,14 @@ class Login extends React.Component {
         }
     };
 
+    goBackButton = () => {
+        return <button onClick={this.props.history.goBack} className="btn btn-default btn-xs">Go back</button>
+    };
+
     render () {
         return (
-
             <div className="col-sm-6 col-sm-offset-3">
                 <div className="thumbnail signin">
-
                     <h3 className="text-center">Login</h3>
 
                     <form className="signup-form" method="post" onSubmit={this.handleSubmit}>
@@ -76,6 +80,9 @@ class Login extends React.Component {
                             type='submit'
                             className='btn btn-success'
                             value='Login'/>
+
+                        <Link to="/forgot-password" className="pull-right">Forgot Password</Link>
+
                     </form>
 
                 </div>
@@ -95,4 +102,4 @@ const mapStateToProps = ({auth}) => {
     return {auth}
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(conditionedComponents(Login))
+export default connect(mapStateToProps, mapDispatchToProps)(conditionedComponents(backButton(Login)))

@@ -11,7 +11,7 @@ const ShowResetToken = (props) => {
                     is <strong>{props.auth.password_reset_token}</strong>
                 </p>
                 <p className="text-center">
-                    <Link className="btn btn-success btn-xs" to="/">Change Password</Link>
+                    <Link className="btn btn-success btn-xs" to="/forgot-password/reset">Change Password</Link>
                 </p>
 
             </div>

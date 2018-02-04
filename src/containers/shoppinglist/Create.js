@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { createShoppingList} from "../../dispatchers";
 import SubmitButton from '../../components/common/button'
 import { loginRequired } from "../auth/helpers";
+import { backButton } from "../../components/common/BackButton";
 
 
 class CreateShoppingList extends React.Component {
@@ -102,4 +103,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(CreateShoppingList));
+export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(backButton(CreateShoppingList)));

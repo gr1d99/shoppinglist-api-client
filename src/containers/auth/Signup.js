@@ -1,10 +1,12 @@
 import React from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import SubmitButton  from '../../components/common/button';
 import { registerUser } from "../../dispatchers";
 import { conditionedComponents } from "./helpers";
+import { backButton } from "../../components/common/BackButton";
 
 class SignUp extends React.Component {
 
@@ -115,6 +117,8 @@ class SignUp extends React.Component {
                             type='submit'
                             className='btn btn-success'
                             value='Create Account'/>
+
+                        <p className="pull-right">Have an account? <span><Link to="/login">Login</Link></span></p>
                     </form>
 
                 </div>
@@ -134,4 +138,4 @@ const mapStateToProps = ({auth, cleanup}) => {
     return {auth, cleanup}
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(conditionedComponents(SignUp))
+export default connect(mapStateToProps, mapDispatchToProps)(conditionedComponents(backButton(SignUp)))

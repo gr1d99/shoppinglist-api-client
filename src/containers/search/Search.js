@@ -60,11 +60,11 @@ class SearchShoppingLists extends React.Component {
                     );
 
                 case 'down':
-                    if (items_in_page > 0) {
+                    if (next_page > 1) {
                         return (
                             <div>
                                 <button onClick={this.handleClick(next_page_url)} className="pull-right">Next Page { next_page }</button>
-                                <span className="text-center">Page { current_page } of { total_pages }</span>
+                                <span className="text-center page-info">Page { current_page } of { total_pages }</span>
                                 <button onClick={this.handleClick(previous_page_url)} className="pull-left">Previous Page</button>
                             </div>)
                     }

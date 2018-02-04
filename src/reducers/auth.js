@@ -17,7 +17,7 @@ const Authenticate = (
             return {login_errors: action.payload};
 
         case types.SIGNUP:
-            return {success_message: action.payload.data.message};
+            return state;
 
         case types.SIGNUP_ERROR:
             return {signup_errors: action.payload};
@@ -42,6 +42,12 @@ const Authenticate = (
             });
 
         case types.GET_RESET_TOKEN_ERROR:
+            return {reset_password_errors: action.payload};
+
+        case types.RESET_PASSWORD:
+            return state;
+
+        case types.RESET_PASSWORD_ERROR:
             return {reset_password_errors: action.payload};
 
         default:

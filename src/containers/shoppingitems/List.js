@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { fetchShoppingItems, getUserShoppingListItemDetail } from "../../dispatchers";
 import { itemToEditId } from "../../actions";
 import { loginRequired } from "../auth/helpers";
+import { backButton } from "../../components/common/BackButton";
 
 class List extends React.Component {
 
@@ -156,4 +157,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(List))
+export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(backButton(List)))

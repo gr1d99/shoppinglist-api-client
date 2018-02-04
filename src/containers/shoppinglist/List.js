@@ -6,6 +6,7 @@ import Truncate from 'react-truncate';
 
 import { getUserShoppingLists } from "../../dispatchers";
 import { loginRequired } from "../auth/helpers";
+import { backButton } from "../../components/common/BackButton";
 
 class List extends React.Component {
 
@@ -41,19 +42,25 @@ class List extends React.Component {
         switch (location) {
             case 'up':
                 return (
-                    <div>
-                        <p>Total Items { total_items }</p>
+                    <div className="shopping-lists-count">
+                        <h5 className="text-center">Total Items { total_items }</h5>
                     </div>
                 );
 
             case 'down':
-                return (
-                    <div>
-                        <button onClick={this.handleClick(next_page_url)} className="pull-right">Next Page { next_page }</button>
-                        <span className="text-center">Page { current_page } of { total_pages }</span>
-                        <button onClick={this.handleClick(previous_page_url)} className="pull-left">Previous Page</button>
-                    </div>
-                );
+                if (next_page > 1) {
+                    return (
+                        <div>
+                            <button onClick={this.handleClick(next_page_url)} className="pull-right">Next
+                                Page {next_page}</button>
+                            <span className="text-center">Page {current_page} of {total_pages}</span>
+                            <button onClick={this.handleClick(previous_page_url)} className="pull-left">Previous Page
+                            </button>
+                        </div>
+                    )
+                } else {
+                    return ''
+                }
 
             default:
                 return ''
@@ -116,4 +123,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(List));
+export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(backButton(List)));

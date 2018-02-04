@@ -2,6 +2,14 @@
     left: 10px;
 }
 
+.shopping-list-count{
+    margin-top: 20px;
+}
+
+span.text-center.page-info {
+    margin-left: 10px;
+}
+
 .update-account-btn,
 .delete-account-btn,
 .update-account-password-btn
@@ -14,7 +22,8 @@ form.shoppinglist-create,
 form.shoppinglist-edit,
 form.shopping-item-create,
 form.shopping-item-edit,
-form.account-edit-form{
+form.account-edit-form,
+form.account-password-reset-form{
     padding: 40px;
 }
 
@@ -27,7 +36,8 @@ form.account-edit-form{
 .thumbnail.shoppinglist-create,
 .thumbnail.shoppinglist-edit,
 .thumbnail.shopping-item-create,
-.thumbnail.shopping-item-edit{
+.thumbnail.shopping-item-edit,
+.thumbnail.account-password-reset{
     margin-top: 100px;
 }
 

@@ -173,6 +173,40 @@ export const getPasswordResetToken = (history, data) => {
 };
 
 
+export const resetUserPassword = (history, data) => {
+    const _prefix = '/auth/reset-password/process';
+    const newData = new FormData();
+
+    newData.set('username', data.username);
+    newData.set('new_password', data.new_password);
+    newData.set('confirm', data.confirm);
+    newData.set('reset_token', data.password_reset_token);
+
+    return dispatch => {
+        axios.post(
+            `${URL}${_prefix}`, newData, {
+                headers: {
+                    'Content-Type': DEFAULT_HEADER
+                }
+            })
+            .then(response => {
+                dispatch(actions.resetPasswordSuccess(response));
+                dispatch(actions.successfulOperation(response.data.message));
+                history.push('/');
+            })
+            .catch(error => {
+                dispatch(actions.resetPasswordError(error));
+                error.response.data.message && dispatch(actions.failedOperation(error));
+                history.push('/forgot-password/reset');
+                setTimeout(
+                    () => {
+                        window.location.reload()
+                    }, 3000)
+            })
+    }
+};
+
+
 // shoppinglists
 export const createShoppingList = (history, data) => {
     const _prefix = '/shopping-lists';
@@ -194,7 +228,7 @@ export const createShoppingList = (history, data) => {
             .then(response => {
                 // const newId = response.data.data.id;
                 dispatch(actions.createShoppingListSuccess(response));
-                dispatch(actions.successfulOperation(msgs.SHOPPING_LIST_CREATED))
+                dispatch(actions.successfulOperation(msgs.SHOPPING_LIST_CREATED));
                 history.push(`/shoppinglists`)
             })
             .catch(error => {
@@ -279,6 +313,8 @@ export const updateShoppingList = (history, id, new_data) => {
                 });
         }
 };
+
+
 
 export const createShoppingItem = (history, id, data) => {
     const _prefix = '/shopping-lists';
