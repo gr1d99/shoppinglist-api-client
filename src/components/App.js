@@ -16,7 +16,6 @@ import EditShoppingList from '../containers/shoppinglist/Edit';
 import CreateShoppingItem from '../containers/shoppingitems/Create';
 import ShoppingItems from '../containers/shoppingitems/List';
 import EdiShoppingItem from '../containers/shoppingitems/Edit';
-
 import SearchShoppingLists from '../containers/search/Search';
 
 import AppLinks, { ShoppingListsLink } from './includes/AppLinks';
