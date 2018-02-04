@@ -10,6 +10,10 @@ form.shopping-item-edit{
     padding: 40px;
 }
 
+.well.account-info {
+    padding-bottom: 40px;
+}
+
 .thumbnail.signup,
 .thumbnail.shoppinglist-create,
 .thumbnail.shoppinglist-edit,
