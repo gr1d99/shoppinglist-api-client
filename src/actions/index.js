@@ -74,6 +74,21 @@ export const updateUserInfoError = error => {
     }
 }
 
+export const deleteUserAccountSuccess = response => {
+    localStorage.clear();
+    return {
+        type: types.DELETE_USER_ACCOUNT,
+        payload: response
+    }
+}
+
+export const deleteUserAccountError = error => {
+    return {
+        type: types.DELETE_USER_ACCOUNT,
+        payload: error.response.data
+    }
+}
+
 export const getResetTokenSuccess = response => {
     return {
         type: types.GET_RESET_TOKEN,
@@ -160,6 +175,20 @@ export const updateShoppingListError = error => {
     }
 };
 
+export const deleteShoppingListSuccess = response => {
+    return {
+        type: types.DELETE_SHOPPINGLIST,
+        payload: response
+    }
+};
+
+export const deleteShoppingListError = error => {
+    return {
+        type: types.DELETE_SHOPPINGLIST_ERROR,
+        payload: error.response
+    }
+};
+
 // SHOPPING ITEMS ACTION CREATORS
 export const createShoppingItemSuccess = response => {
     return {
@@ -213,6 +242,20 @@ export const updateShoppingItemDetailSuccess = response => {
 export const updateShoppingItemsDetailError = error => {
     return {
         type: types.UPDATE_SHOPPING_ITEM_DETAIL_ERROR,
+        payload: error.response.data
+    }
+};
+
+export const deleteShoppingItemSuccess = response => {
+    return {
+        type: types.DEELETE_SHOPPING_ITEM,
+        payload: response
+    }
+};
+
+export const deleteShoppingItemError = error => {
+    return {
+        type: types.DEELETE_SHOPPING_ITEM_ERROR,
         payload: error.response.data
     }
 };
@@ -280,64 +323,10 @@ export const clearAlertMessage = () => {
     }
 }
 
-// actions creators for clearing intenal state such as form data after the
+// actions creators for clearing internal state such as form data after the
 // operation has succeeded.
 export const clearInternalState = () => {
     return {
         type: types.CLEAR_INTERNAL_STATE
     }
 };
-
-
-// export const getUserInfo = () => {
-//     const _prefix = '/auth/users';
-//     let apiKey = localStorage.getItem('apiKey');
-//
-//     const request = axios.get(
-//         `${URL}${_prefix}`, {
-//             headers: {
-//                 'Content-Type': DEFAULT_HEADER,
-//                 'x-access-token': apiKey
-//             }
-//         });
-//
-//     return {
-//         type: actions.USER_INFO,
-//         payload: request
-//     }
-// };
-//
-// // Shopping ShoppingList CRUD action creators
-//
-
-
-
-
-//
-// export const deleteShoppingList = (id, data) => {
-//     const _prefix = '/shopping-lists';
-//     const waitingData = new FormData();
-//
-//     waitingData.set('name', data.name);
-//
-//     let apiKey = localStorage.getItem('apiKey');
-//
-//     let url = `${URL}${_prefix}/${id}`;
-//
-//     const request = axios({
-//         url: url,
-//         method: 'delete',
-//         data: {name: data.name},
-//         headers: {
-//             'Content-Type': DEFAULT_HEADER,
-//             'x-access-token': apiKey
-//         }
-//     });
-//
-//     return {
-//         type: actions.DELETE_SHOPPINGLIST,
-//         payload: request
-//     }
-// };
-//
-
