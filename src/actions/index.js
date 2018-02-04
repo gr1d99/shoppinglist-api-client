@@ -74,6 +74,20 @@ export const updateUserInfoError = error => {
     }
 }
 
+export const getResetTokenSuccess = response => {
+    return {
+        type: types.GET_RESET_TOKEN,
+        payload: response
+    }
+}
+
+export const getResetTokenError = error => {
+    return {
+        type: types.GET_RESET_TOKEN_ERROR,
+        payload: error.response.data
+    }
+}
+
 // SHOPPING LISTS ACTION CREATORS
 export const createShoppingListSuccess = response => {
     return {
