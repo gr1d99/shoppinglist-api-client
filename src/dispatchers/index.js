@@ -1,8 +1,10 @@
 import axios from 'axios';
 
 import * as actions from "../actions";
+import * as msgs from "../containers/utils/defaults";
 
-import { BASE_URL, API_PREFIX } from '../components/Defaults';
+
+import { BASE_URL, API_PREFIX, LIST_LIMIT, ITEM_LIST_LIMIT, PAGE, SEARCH_LIMIT } from '../components/Defaults';
 
 const URL = `${ BASE_URL }${ API_PREFIX }`;
 const DEFAULT_HEADER = 'application/x-www-form-urlencoded';
@@ -22,12 +24,15 @@ export const registerUser = (history, data) => {
                 headers: {'Content-Type': DEFAULT_HEADER }
             })
             .then(response => {
-                history.push('/signup');
                 dispatch(actions.RegisterUserSuccess(response));
+                dispatch(actions.successfulOperation(msgs.ACCOUNT_CREATED))
+                dispatch(actions.clearInternalState())
+                history.push('/login');
             })
             .catch(error => {
                 history.push('/signup');
                 dispatch(actions.RegisterUserError(error))
+                dispatch(actions.failedOperation(error))
             })
     }
 };
@@ -47,11 +52,13 @@ export const LoginUser = (history, data) => {
             })
             .then(response => {
                 dispatch(actions.LoginUserSuccess(response));
+                dispatch(actions.successfulOperation(msgs.LOGGED_IN))
                 history.push("/")
                 window.location.reload()
             })
             .catch(error => {
                 dispatch(actions.LoginUserError(error));
+                dispatch(actions.failedOperation(error))
                 history.push("/login")
             })
     }
@@ -71,12 +78,14 @@ export const LogoutUser = (history) => {
             })
             .then(response => {
                 dispatch(actions.LogoutUserSuccess(response));
+                dispatch(actions.successfulOperation(msgs.LOGGED_OUT))
                 history.push('/');
                 window.location.reload()
             })
             .catch(error => {
                 history.push('/');
                 dispatch(actions.LogoutUserError(error))
+                dispatch(actions.failedOperation(error))
             })
     }
 };
@@ -103,7 +112,7 @@ export const createShoppingList = (history, data) => {
             .then(response => {
                 // const newId = response.data.data.id;
                 dispatch(actions.createShoppingListSuccess(response));
-                dispatch(actions.successfulOperation(response))
+                dispatch(actions.successfulOperation(msgs.SHOPPING_LIST_CREATED))
                 history.push(`/shoppinglists`)
             })
             .catch(error => {
@@ -114,19 +123,20 @@ export const createShoppingList = (history, data) => {
     }
 };
 
-export const getUserShoppingLists = (history) => {
+export const getUserShoppingLists = (history, url=null) => {
     const _prefix = '/shopping-lists';
     let apiKey = localStorage.getItem('apiKey');
+    const finalUrl = !url ? `${URL}${_prefix}?limit=${LIST_LIMIT}&page=${PAGE}`: url;
 
     return dispatch => axios.get(
-        `${URL}${_prefix}`, {
+        finalUrl, {
             headers: {
                 'Content-Type': DEFAULT_HEADER,
                 'x-access-token': apiKey
             }
         })
         .then(response => {
-            history.push('/shoppinglists')
+            history.push('/shoppinglists');
             dispatch(actions.fetchShoppingListSuccess(response));
         })
         .catch(error => {
@@ -177,7 +187,7 @@ export const updateShoppingList = (history, id, new_data) => {
                 .then(response => {
                     history.push(`/shoppinglists/${id}`);
                     dispatch(actions.updateShoppingListSuccess(response));
-                    dispatch(actions.successfulOperation(response))
+                    dispatch(actions.successfulOperation(msgs.SHOPPING_LIST_UPDATED))
 
                 })
                 .catch(error => {
@@ -211,7 +221,7 @@ export const createShoppingItem = (history, id, data) => {
             .then(response => {
                 history.push(`/shoppinglists/${id}`);
                 dispatch(actions.createShoppingItemSuccess(response));
-                dispatch(actions.successfulOperation(response))
+                dispatch(actions.successfulOperation(msgs.SHOPPING_LIST_CREATED))
             })
             .catch(error => {
                 history.push(`/shoppinglists/${id}/items/create`);
@@ -222,13 +232,14 @@ export const createShoppingItem = (history, id, data) => {
 };
 
 
-export const fetchShoppingItems = (history, id) => {
+export const fetchShoppingItems = (history, id, url=null) => {
     const _prefix = '/shopping-lists';
     let apiKey = localStorage.getItem('apiKey');
+    const finalUrl = !url ? `${URL}${_prefix}/${id}/shopping-items?limit=${ITEM_LIST_LIMIT}&page=${PAGE}`: url;
 
     return dispatch => {
         axios.get(
-            `${URL}${_prefix}/${id}/shopping-items`, {
+            finalUrl, {
                 headers: {
                     'Content-Type': DEFAULT_HEADER,
                     'x-access-token': apiKey
@@ -237,11 +248,98 @@ export const fetchShoppingItems = (history, id) => {
             .then(response => {
                 history.push(`/shoppinglists/${id}/items`);
                 dispatch(actions.fetchShoppingItemsSuccess(response));
-                dispatch(actions.successfulOperation(response))
             })
             .catch(error => {
                 history.push(`/shoppinglists/${id}`);
                 dispatch(actions.fetchShoppingItemsError(error));
+                error.response.data.message && dispatch(actions.failedOperation(error));
+            })
+    }
+};
+
+export const getUserShoppingListItemDetail = (history, shlId, itemId) => {
+    const _prefix = '/shopping-lists';
+    let apiKey = localStorage.getItem('apiKey');
+
+    return dispatch => {
+        axios.get(
+            `${URL}${_prefix}/${shlId}/shopping-items/${itemId}`, {
+                headers: {
+                    'Content-Type': DEFAULT_HEADER,
+                    'x-access-token': apiKey
+                }
+            })
+            .then(response => {
+                dispatch(actions.fetchShoppingItemDetailSuccess(response))
+                history.push(`/shoppinglists/${shlId}/items/${itemId}/edit`)
+            })
+            .catch(error => {
+                dispatch(actions.fetchShoppingItemsDetailError(error));
+            })
+    }
+};
+
+export const updateShoppingListItem = (history, shlId, itemId, new_data) => {
+    const _prefix = '/shopping-lists';
+    const newData = new FormData();
+
+
+    // get appropriate value of bought field.
+    // backend only accepts '1' and '0'
+    let _bought = '';
+    new_data.bought === true ? _bought = '1': _bought = '0';
+
+    newData.set('name', new_data.name);
+    newData.set('price', new_data.price);
+    newData.set('bought', _bought);
+    newData.set('quantity_description', new_data.quantity_description);
+
+    let apiKey = localStorage.getItem('apiKey');
+
+    return dispatch => {
+        axios.put(
+            `${URL}${_prefix}/${shlId}/shopping-items/${itemId}`, newData, {
+                headers: {
+                    'Content-Type': DEFAULT_HEADER,
+                    'x-access-token': apiKey
+                }
+            })
+            .then(response => {
+                history.push(`/shoppinglists/${shlId}/items`);
+                dispatch(actions.successfulOperation(msgs.SHOPPING_ITEM_UPDATED))
+                dispatch(actions.updateShoppingItemDetailSuccess(response));
+
+            })
+            .catch(error => {
+                history.push(`/shoppinglists/${shlId}/edit`);
+                dispatch(actions.updateShoppingItemsDetailError(error));
+                error.response.data.message && dispatch(actions.failedOperation(error));
+            });
+    }
+};
+
+export const searchShoppingLists = (history, term, url=null) => {
+    const _prefix = '/shopping-lists/search';
+    let apiKey = localStorage.getItem('apiKey');
+    const finalUrl = !url ? `${URL}${_prefix}?q=${term}&limit=${SEARCH_LIMIT}&page=${PAGE}`: url;
+    console.log(url)
+
+    return dispatch => {
+        axios.get(
+            finalUrl, {
+                headers: {
+                    'Content-Type': DEFAULT_HEADER,
+                    'x-access-token': apiKey
+                }
+            })
+            .then(response => {
+                dispatch(actions.searchShoppingListsSuccess(response));
+                response.data.message && dispatch(actions.successfulOperation(response.data.message))
+                history.push('/shoppinglists/search')
+            })
+            .catch(error => {
+                history.push(`/shoppinglists/search`);
+                dispatch(actions.searchShoppingListsError(error));
                 error.response.data.message && dispatch(actions.failedOperation(error));
             })
     }

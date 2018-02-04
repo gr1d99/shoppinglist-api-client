@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { createShoppingList} from "../../dispatchers";
 import SubmitButton from '../../components/common/button'
+import { loginRequired } from "../auth/helpers";
 
 
 class CreateShoppingList extends React.Component {
@@ -14,10 +15,6 @@ class CreateShoppingList extends React.Component {
             name: '',
             description: '',
         }
-    }
-
-    componentDidUpdate = () => {
-        console.log('updated', this.props)
     }
 
     handleChange = (e) => {
@@ -95,8 +92,8 @@ class CreateShoppingList extends React.Component {
     }
 }
 
-const mapStateToProps = ({shoppingList}) => {
-    return {shoppingList}
+const mapStateToProps = ({shoppingList, auth}) => {
+    return {shoppingList, auth}
 };
 
 const mapDispatchToProps = dispatch => {
@@ -105,4 +102,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateShoppingList);
+export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(CreateShoppingList));

@@ -20,11 +20,10 @@ const Authenticate = (
             return {signup_errors: action.payload}
 
         case types.LOGOUT:
-            localStorage.clear();
             return state;
 
         case types.LOGOUT_ERROR:
-            return {login_error: action.payload}
+            return {login_error: action.payload};
 
         default:
             return state

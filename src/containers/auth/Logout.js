@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { LogoutUser} from "../../dispatchers";
+import { loginRequired } from "./helpers";
 
 class LogoutUserComponent extends React.Component {
 
@@ -45,4 +46,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LogoutUserComponent)
+export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(LogoutUserComponent))

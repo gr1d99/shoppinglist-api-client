@@ -15,19 +15,21 @@ import EditShoppingList from '../containers/shoppinglist/Edit';
 
 import CreateShoppingItem from '../containers/shoppingitems/Create';
 import ShoppingItems from '../containers/shoppingitems/List';
+import EdiShoppingItem from '../containers/shoppingitems/Edit';
+
+import SearchShoppingLists from '../containers/search/Search';
 
 import AppLinks, { ShoppingListsLink } from './includes/AppLinks';
 
 import '../static/App.css';
 
 class App extends Component {
-
     render() {
     return (
         <BrowserRouter>
             <div>
                 <nav className="navbar navbar-default">
-                    <div className="container container-fluid">
+                    <div className="container-fluid">
                         <div className="navbar-header">
                             <button type="button" className="navbar-toggle collapsed" data-toggle="collapse"
                                     data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -41,12 +43,6 @@ class App extends Component {
                         </div>
 
                         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <form className="navbar-form navbar-left">
-                                <div className="form-group">
-                                    <input type="text" className="form-control" placeholder="Search"/>
-                                </div>
-                                <button type="submit" className="btn btn-default">Submit</button>
-                            </form>
                             <AppLinks isAuthenticated={this.props.auth.isAuthenticated}/>
                         </div>
                     </div>
@@ -60,11 +56,13 @@ class App extends Component {
                         <Route path="/signup" component={SignUp}/>
                         <Route path="/login" component={Login}/>
                         <Route path="/logout" component={Logout}/>
+                        <Route path="/shoppinglists/create" component={CreateShoppingList}/>
+                        <Route path="/shoppinglists/search" component={SearchShoppingLists}/>
+                        <Route path="/shoppinglists/:id/items/:id/edit" component={EdiShoppingItem}/>
                         <Route path="/shoppinglists/:id/items/create" component={CreateShoppingItem}/>
                         <Route path="/shoppinglists/:id/items" component={ShoppingItems}/>
                         <Route path="/shoppinglists/:id/edit" component={EditShoppingList}/>
                         <Route path="/shoppinglists/:id" component={ShoppingListDetail}/>
-                        <Route path="/shoppinglists/create" component={CreateShoppingList}/>
                         <Route path="/shoppinglists" component={ShoppingList}/>
                     </Switch>
                 </div>
@@ -78,4 +76,4 @@ const mapStateToProps = ({auth, shoppingList, alerts}) => {
     return {auth, shoppingList, alerts}
 };
 
-export default connect(mapStateToProps, null)(App)
+export default connect(mapStateToProps, {})(App)

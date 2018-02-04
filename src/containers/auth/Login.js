@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import SubmitButton  from '../../components/common/button';
 import { LoginUser } from "../../dispatchers";
+import { conditionedComponents } from "./helpers";
+
 
 class Login extends React.Component {
 
@@ -41,32 +43,13 @@ class Login extends React.Component {
                 }
             }
         }
-    }
-
-    getErrorMessage = () => {
-        if (this.props.auth.login_errors) {
-            if (this.props.auth.login_errors.message) {
-                return (
-                    <p className="text-danger text-justified">{this.props.auth.login_errors.message}</p>
-                )
-            }
-        }
-    }
-
-    getSuccessMessage = () => {
-        if (this.props.auth.success_message) {
-            return <p className="text-success text-center">{this.props.auth.success_message}</p>
-        }
-    }
+    };
 
     render () {
         return (
 
             <div className="col-sm-6 col-sm-offset-3">
                 <div className="thumbnail signin">
-
-                    {this.getSuccessMessage()}
-                    {this.getErrorMessage()}
 
                     <h3 className="text-center">Login</h3>
 
@@ -112,4 +95,4 @@ const mapStateToProps = ({auth}) => {
     return {auth}
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(conditionedComponents(Login))

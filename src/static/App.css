@@ -5,14 +5,16 @@
 form.signup-form,
 form.shoppinglist-create,
 form.shoppinglist-edit,
-form.shopping-item-create{
+form.shopping-item-create,
+form.shopping-item-edit{
     padding: 40px;
 }
 
 .thumbnail.signup,
 .thumbnail.shoppinglist-create,
 .thumbnail.shoppinglist-edit,
-.thumbnail.shopping-item-create{
+.thumbnail.shopping-item-create,
+.thumbnail.shopping-item-edit{
     margin-top: 100px;
 }
 

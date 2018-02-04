@@ -1,13 +1,15 @@
 import React from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
+
 import SubmitButton  from '../../components/common/button';
 import { registerUser } from "../../dispatchers";
+import { conditionedComponents } from "./helpers";
 
 class SignUp extends React.Component {
 
     constructor (props) {
-        super (props);
+        super(props);
 
         this.state = {
             username: '',
@@ -16,6 +18,25 @@ class SignUp extends React.Component {
             confirm: '',
         }
     }
+
+    componentWillReceiveProps = () => {
+        const { cleanup_required } = this.props.cleanup;
+        switch (cleanup_required) {
+            case true:
+                return this.setState({
+                    username: '',
+                    email: '',
+                    password: '',
+                    confirm: '',
+                });
+
+            case false:
+                return '';
+
+            default:
+                return '';
+        }
+    };
 
     handleChange = (e) => {
         const key = e.target.name;
@@ -42,13 +63,7 @@ class SignUp extends React.Component {
                 }
             }
         }
-    }
-
-    getSuccessMessage = () => {
-        if (this.props.auth.success_message) {
-            return <p className="text-success text-center">{this.props.auth.success_message}</p>
-        }
-    }
+    };
 
     render () {
         return (
@@ -56,7 +71,6 @@ class SignUp extends React.Component {
             <div className="col-sm-6 col-sm-offset-3">
                 <div className="thumbnail signup">
 
-                    {this.getSuccessMessage()}
 
                     <h3 className="text-center">Signup</h3>
 
@@ -116,8 +130,8 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-const mapStateToProps = ({auth}) => {
-    return {auth}
+const mapStateToProps = ({auth, cleanup}) => {
+    return {auth, cleanup}
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
+export default connect(mapStateToProps, mapDispatchToProps)(conditionedComponents(SignUp))

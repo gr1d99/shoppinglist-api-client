@@ -26,6 +26,8 @@ export const ShoppingListsLink = (props) => {
         return (
             <ul className="nav navbar-nav">
                 <li className="active"><Link to="/shoppinglists">My Shopping Lists <span className="sr-only">(current)</span></Link></li>
+                <li><Link to='/shoppinglists/search'>Search</Link></li>
+
             </ul>
         )
     } else {

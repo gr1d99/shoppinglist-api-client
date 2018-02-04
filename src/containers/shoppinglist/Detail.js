@@ -4,12 +4,24 @@ import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 
 import { getUserShoppingListDetail } from "../../dispatchers";
+import { loginRequired } from "../auth/helpers";
 
 class ShoppingListDetailComponent extends React.Component {
 
     componentWillMount = () => {
-        const shlId = this.props.match.params.id;
-        this.props.getUserShoppingListDetail(this.props.history, shlId)
+        const { isAuthenticated } = this.props.auth;
+        switch (isAuthenticated) {
+            case true:
+                const shlId = this.props.match.params.id;
+                this.props.getUserShoppingListDetail(this.props.history, shlId);
+                return;
+
+            case false:
+                return this.props.history.push('/login');
+
+            default:
+                return this.props.history.push('/login');
+        }
     };
 
     render() {
@@ -93,8 +105,8 @@ class ShoppingListDetailComponent extends React.Component {
     }
 }
 
-const mapStateToProps = ({shoppingList, shoppingItem}) => {
-    return {shoppingList, shoppingItem}
+const mapStateToProps = ({shoppingList, shoppingItem, auth}) => {
+    return {shoppingList, shoppingItem, auth}
 }
 
 const mapDispatchToProps = dispatch => {
@@ -103,4 +115,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShoppingListDetailComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(ShoppingListDetailComponent));

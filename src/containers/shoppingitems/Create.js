@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 
 import { createShoppingItem } from "../../dispatchers";
 import SubmitButton  from '../../components/common/button';
+import { loginRequired } from "../auth/helpers";
 
 class CreateShoppingItem extends React.Component {
     constructor (props) {
@@ -106,8 +107,8 @@ class CreateShoppingItem extends React.Component {
     }
 }
 
-const mapStateToProps = ({shoppingItem}) => {
-    return {shoppingItem}
+const mapStateToProps = ({shoppingItem, auth}) => {
+    return {shoppingItem, auth}
 }
 
 const mapDispatchToProps = dispatch => {
@@ -116,4 +117,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateShoppingItem);
+export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(CreateShoppingItem));
