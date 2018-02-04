@@ -88,6 +88,20 @@ export const getResetTokenError = error => {
     }
 }
 
+export const resetPasswordSuccess = response => {
+    return {
+        type: types.RESET_PASSWORD,
+        payload: response
+    }
+}
+
+export const resetPasswordError = error => {
+    return {
+        type: types.RESET_PASSWORD_ERROR,
+        payload: error.response.data
+    }
+}
+
 // SHOPPING LISTS ACTION CREATORS
 export const createShoppingListSuccess = response => {
     return {
@@ -245,9 +259,18 @@ export const suspiciousOperation = error => {
 }
 
 export const failedOperation = error => {
+    let payload = null;
+    if (error.response.data.message.token) {
+        payload = error.response.data.message.token
+    } else if(error.response.data.message.password) {
+        payload = error.response.data.message.password
+    } else {
+        payload = error.response.data.message
+    }
+
     return {
         type: types.ERROR_ALERT,
-        payload: error.response.data.message
+        payload: payload
     }
 }
 
