@@ -6,7 +6,8 @@ form.signup-form,
 form.shoppinglist-create,
 form.shoppinglist-edit,
 form.shopping-item-create,
-form.shopping-item-edit{
+form.shopping-item-edit,
+form.account-edit-form{
     padding: 40px;
 }
 
@@ -15,6 +16,7 @@ form.shopping-item-edit{
 }
 
 .thumbnail.signup,
+.thumbnail.account-edit,
 .thumbnail.shoppinglist-create,
 .thumbnail.shoppinglist-edit,
 .thumbnail.shopping-item-create,
