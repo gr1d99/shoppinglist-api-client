@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { loginRequired } from "../../containers/auth/helpers";
 
-import { fetchUserInfo } from "../../dispatchers";
+import { fetchUserInfo, deleteUserAccount } from "../../dispatchers";
 
 
 class Dashboard extends React.Component {
@@ -46,6 +46,10 @@ class Dashboard extends React.Component {
         }
     };
 
+    handleDeleteAccount = (e) => {
+        this.props.deleteUserAccount(this.props.history)
+    };
+
     render () {
         return (
             <div className="dashboard">
@@ -57,7 +61,7 @@ class Dashboard extends React.Component {
                             <div className="text-center">
                                 <Link className="btn btn-success btn-xs update-account-btn" to="/dashboard/account/edit">Update Account</Link>
                                 <Link className="btn btn-info btn-xs update-account-password-btn" to="/forgot-password">Change Password</Link>
-                                <Link className="btn btn-danger btn-xs delete-account-btn" to="/dashboard/account/delete">Delete Account</Link>
+                                <button className="btn btn-danger btn-xs delete-account-btn" onClick={this.handleDeleteAccount}>Delete Account</button>
                             </div>
                         </div>
                     </div>
@@ -74,7 +78,8 @@ const mapStateToProps = ({auth}) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchUserInfo: bindActionCreators(fetchUserInfo, dispatch)
+        fetchUserInfo: bindActionCreators(fetchUserInfo, dispatch),
+        deleteUserAccount: bindActionCreators(deleteUserAccount, dispatch)
     }
 };
 
