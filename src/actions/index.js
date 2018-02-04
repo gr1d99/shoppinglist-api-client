@@ -20,7 +20,6 @@ export const LoginUserSuccess = response => {
     localStorage.setItem('apiKey', apiKey);
     return {
         type: types.LOGIN,
-        payload: response
     }
 };
 
@@ -33,9 +32,9 @@ export const LoginUserError = error => {
 
 
 export const LogoutUserSuccess = response => {
+    localStorage.clear();
     return {
         type: types.LOGOUT,
-        payload: response
     }
 }
 
@@ -133,12 +132,65 @@ export const fetchShoppingItemsError = error => {
     }
 };
 
+export const fetchShoppingItemDetailSuccess = response => {
+    return {
+        type: types.FETCH_SHOPPING_ITEM_DETAIL,
+        payload: response
+    }
+};
+
+export const fetchShoppingItemsDetailError = error => {
+    return {
+        type: types.FETCH_SHOPPING_ITEMS_ERROR,
+        payload: error.response.data
+    }
+};
+
+export const updateShoppingItemDetailSuccess = response => {
+    return {
+        type: types.UPDATE_SHOPPING_ITEM_DETAIL,
+        payload: response
+    }
+};
+
+export const updateShoppingItemsDetailError = error => {
+    return {
+        type: types.UPDATE_SHOPPING_ITEM_DETAIL_ERROR,
+        payload: error.response.data
+    }
+};
+
+
+export const itemToEditId = id => {
+    return {
+        type: types.ITEM_ID,
+        payload: id
+    }
+}
+
+
+// SHOPPING LISTS SEARCH ACTION CREATORS.
+export const searchShoppingListsSuccess = response => {
+    console.log('success', response)
+    return {
+        type: types.SEARCH,
+        payload: response
+    }
+};
+
+export const searchShoppingListsError = error => {
+    return {
+        type: types.SEARCH_ERROR,
+        payload: error.response.data
+    }
+};
+
 
 // ALERTS ACTION CREATORS
-export const successfulOperation = response => {
+export const successfulOperation = msg => {
     return {
         type: types.SUCCESS_ALERT,
-        payload: response.data.message
+        payload: msg
     }
 }
 
@@ -161,6 +213,14 @@ export const clearAlertMessage = () => {
         type: types.CLEAR_ALERT
     }
 }
+
+// actions creators for clearing intenal state such as form data after the
+// operation has succeeded.
+export const clearInternalState = () => {
+    return {
+        type: types.CLEAR_INTERNAL_STATE
+    }
+};
 
 
 // export const getUserInfo = () => {
