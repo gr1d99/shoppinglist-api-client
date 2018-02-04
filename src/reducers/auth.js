@@ -3,7 +3,10 @@ import * as types  from "../actions/ActionTypes";
 let _auth = !(localStorage.getItem('apiKey') === null);
 
 const Authenticate = (
-    state={isAuthenticated: _auth, userDetail: null}, action) => {
+    state={isAuthenticated: _auth,
+        userDetail: null,
+        password_reset_token: ''},
+    action) => {
     switch (action.type) {
         case types.LOGIN:
             return Object.assign({}, state, {
@@ -31,7 +34,15 @@ const Authenticate = (
             });
 
         case types.USER_INFO_ERROR:
-            return {edit_errors: action.payload}
+            return {edit_errors: action.payload};
+
+        case types.GET_RESET_TOKEN:
+            return Object.assign({}, state, {
+                password_reset_token: action.payload.data.data.password_reset_token
+            });
+
+        case types.GET_RESET_TOKEN_ERROR:
+            return {reset_password_errors: action.payload};
 
         default:
             return state

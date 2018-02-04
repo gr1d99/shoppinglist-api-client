@@ -146,6 +146,32 @@ export const updateUserInfo = (history, data) => {
     }
 };
 
+export const getPasswordResetToken = (history, data) => {
+    const _prefix = '/auth/reset-password';
+    const newData = new FormData();
+
+    newData.set('email', data.email);
+
+    return dispatch => {
+        axios.post(
+            `${URL}${_prefix}`, newData, {
+                headers: {
+                    'Content-Type': DEFAULT_HEADER
+                }
+            })
+            .then(response => {
+                dispatch(actions.getResetTokenSuccess(response));
+                dispatch(actions.successfulOperation(response.data.message))
+                history.push('/forgot-password/reset-token/show');
+            })
+            .catch(error => {
+                history.push('/forgot-password');
+                dispatch(actions.getResetTokenError(error));
+                error.response.data.message && dispatch(actions.failedOperation(error));
+            })
+    }
+};
+
 
 // shoppinglists
 export const createShoppingList = (history, data) => {
