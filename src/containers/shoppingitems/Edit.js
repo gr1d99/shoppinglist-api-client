@@ -2,8 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from "redux";
 
-import { updateShoppingList, getUserShoppingListDetail } from "../../dispatchers/index";
+import { updateShoppingListItem } from "../../dispatchers/index";
 import SubmitButton  from '../../components/common/button';
+import { loginRequired } from "../auth/helpers";
 
 class EditShoppingListItem extends React.Component {
     constructor(props) {
@@ -12,25 +13,34 @@ class EditShoppingListItem extends React.Component {
         this.state = {
             name: '',
             price: '',
-            quantity: '',
-            bought: ''
-        }
-
+            quantity_description: '',
+            bought: null
+        };
     }
 
-    // componentWillMount = () => {
-    //     const shlId = this.props.match.params.id
-    //     this.props.getUserShoppingListDetail(this.props.history, shlId)
-    //
-    //     if (this.props.shoppingList.shlDetail) {
-    //         const { name, description } = this.props.shoppingList.shlDetail;
-    //         this.setState({name, description})
-    //     }
-    // }
+    componentWillMount = () => {
+        const { isAuthenticated } = this.props.auth;
+        switch (isAuthenticated) {
+            case true:
+                if (this.props.shoppingItem.shlItemDetail) {
+                    const { name, price, quantity_description, bought } = this.props.shoppingItem.shlItemDetail;
+                    this.setState({name, price, quantity_description, bought })}
+                return;
+
+            case false:
+                return this.props.history.push('/login');
+
+            default:
+                return this.props.history.push('/login');
+        }
+    }
+
 
     handleChange = e => {
         const key = e.target.name;
-        const value = e.target.value;
+        let value = e.target.value;
+        key === 'bought' && (value = e.target.checked);
+
         let obj = {};
 
         obj[key] = value;
@@ -38,21 +48,21 @@ class EditShoppingListItem extends React.Component {
     };
 
     handleSubmit = e => {
-        const shlId = this.props.match.params.id
+        const shlId = this.props.shoppingItem.shlId;
+        const itemId = this.props.match.params.id;
         e.preventDefault();
-        this.props.updateShoppingList(
+         this.props.updateShoppingListItem(
             this.props.history,
             shlId,
-            this.state
-        )
-    };
+            itemId,
+            this.state)};
 
     getErrorMessages = field => {
-        if (this.props.shoppingList.error_messages) {
-            if (this.props.shoppingList.error_messages.messages) {
-                if (this.props.shoppingList.error_messages.messages.hasOwnProperty(field)) {
+        if (this.props.shoppingItem.error_messages) {
+            if (this.props.shoppingItem.error_messages.messages) {
+                if (this.props.shoppingItem.error_messages.messages.hasOwnProperty(field)) {
                     return (
-                        this.props.shoppingList.error_messages.messages[field].map(error => {
+                        this.props.shoppingItem.error_messages.messages[field].map(error => {
                             return <p className="text-danger" key={error}>{error}</p>
                         })
                     )
@@ -65,11 +75,11 @@ class EditShoppingListItem extends React.Component {
         return (
             <div className="col-sm-6 col-sm-offset-3">
 
-                <div className="thumbnail shoppinglist-edit">
+                <div className="thumbnail shopping-item-edit">
 
                     <h3 className="text-center">Edit</h3>
 
-                    <form className="form shopping-item-create" onSubmit={this.handleSubmit}>
+                    <form className="form shopping-item-edit" onSubmit={this.handleSubmit}>
                         <div className="form-group">
                             <input
                                 type="text"
@@ -94,11 +104,20 @@ class EditShoppingListItem extends React.Component {
                             <input
                                 type="text"
                                 className="form-control"
-                                name="quantity"
+                                name="quantity_description"
                                 placeholder="Quantity description"
                                 onChange={this.handleChange}
-                                value={this.state.quantity}/>
-                            {this.getErrorMessages('quantity')}
+                                value={this.state.quantity_description}/>
+                            {this.getErrorMessages('quantity_description')}
+                        </div>
+
+                        <div className="form-group">
+                            <input
+                                type="checkbox"
+                                name="bought"
+                                onChange={this.handleChange}
+                                checked={this.state.bought}/> Bought
+                            {this.getErrorMessages('bought')}
                         </div>
 
                         <SubmitButton
@@ -116,13 +135,12 @@ class EditShoppingListItem extends React.Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        updateShoppingList: bindActionCreators(updateShoppingList, dispatch),
-        getUserShoppingListDetail: bindActionCreators(getUserShoppingListDetail, dispatch),
+        updateShoppingListItem: bindActionCreators(updateShoppingListItem, dispatch),
     }
-}
+};
 
-const mapStateToProps = ({shoppingList}) => {
-    return {shoppingList}
-}
+const mapStateToProps = ({shoppingItem, auth}) => {
+    return {shoppingItem, auth}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditShoppingListItem)
+export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(EditShoppingListItem))
