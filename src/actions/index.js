@@ -59,6 +59,21 @@ export const fetchUserInfoError = error => {
     }
 }
 
+export const updateUserInfoSuccess = response => {
+    localStorage.clear();
+    return {
+        type: types.UPDATE_USER_INFO,
+        payload: response
+    }
+}
+
+export const updateUserInfoError = error => {
+    return {
+        type: types.USER_INFO_ERROR,
+        payload: error.response.data
+    }
+}
+
 // SHOPPING LISTS ACTION CREATORS
 export const createShoppingListSuccess = response => {
     return {
