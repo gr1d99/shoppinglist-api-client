@@ -12,6 +12,7 @@ import SignUp from '../containers/auth/Signup';
 import Login from '../containers/auth/Login';
 import Logout from '../containers/auth/Logout';
 import EditAccount from '../containers/auth/Edit';
+import ResetPassword from '../containers/auth/password/ResetPassword';
 
 import ShoppingList from '../containers/shoppinglist/List';
 import CreateShoppingList from '../containers/shoppinglist/Create';
@@ -26,7 +27,6 @@ import SearchShoppingLists from '../containers/search/Search';
 import AppLinks, { ShoppingListsLink } from './includes/AppLinks';
 
 import '../static/App.css';
-import ShowToken from "./auth/password/ShowToken";
 
 class App extends Component {
     render() {
@@ -71,6 +71,7 @@ class App extends Component {
                         <Route path="/shoppinglists" component={ShoppingList}/>
                         <Route path="/dashboard/account/edit" component={EditAccount}/>
                         <Route path="/forgot-password/reset-token/show" component={ShowResetToken}/>
+                        <Route path="/forgot-password/reset" component={ResetPassword}/>
                         <Route path="/forgot-password" component={GetResetToken}/>
                         <Route path="/dashboard" component={Dashboard}/>
                     </Switch>
