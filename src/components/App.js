@@ -9,6 +9,7 @@ import AlertMessages from '../containers/utils/messages'
 import SignUp from '../containers/auth/Signup';
 import Login from '../containers/auth/Login';
 import Logout from '../containers/auth/Logout';
+import EditAccount from '../containers/auth/Edit';
 
 import ShoppingList from '../containers/shoppinglist/List';
 import CreateShoppingList from '../containers/shoppinglist/Create';
@@ -65,6 +66,7 @@ class App extends Component {
                         <Route path="/shoppinglists/:id/edit" component={EditShoppingList}/>
                         <Route path="/shoppinglists/:id" component={ShoppingListDetail}/>
                         <Route path="/shoppinglists" component={ShoppingList}/>
+                        <Route path="/dashboard/account/edit" component={EditAccount}/>
                         <Route path="/dashboard" component={Dashboard}/>
                     </Switch>
                 </div>
