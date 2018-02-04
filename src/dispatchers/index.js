@@ -90,6 +90,30 @@ export const LogoutUser = (history) => {
     }
 };
 
+export const fetchUserInfo = (history) => {
+    const _prefix = '/auth/users';
+    let apiKey = localStorage.getItem('apiKey');
+    const finalUrl = `${URL}${_prefix}`;
+
+    return dispatch => axios.get(
+        finalUrl, {
+            headers: {
+                'Content-Type': DEFAULT_HEADER,
+                'x-access-token': apiKey
+            }
+        })
+        .then(response => {
+            history.push('/dashboard');
+            dispatch(actions.fetchUserInfoSuccess(response));
+            console.log(response)
+        })
+        .catch(error => {
+            dispatch(actions.fetchUserInfoError(error));
+            error.response.data.message && dispatch(actions.failedOperation(error));
+            history.push('/')
+        })
+};
+
 
 // shoppinglists
 export const createShoppingList = (history, data) => {
