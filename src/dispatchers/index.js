@@ -114,6 +114,38 @@ export const fetchUserInfo = (history) => {
         })
 };
 
+export const updateUserInfo = (history, data) => {
+    const _prefix = '/auth/users';
+    const newData = new FormData();
+    let apiKey = localStorage.getItem('apiKey');
+
+    newData.set('username', data.username);
+
+    return dispatch => {
+        axios.put(
+            `${URL}${_prefix}`, newData, {
+                headers: {
+                    'Content-Type': DEFAULT_HEADER,
+                    'x-access-token': apiKey
+                }
+            })
+            .then(response => {
+                dispatch(actions.updateUserInfoSuccess(response));
+                dispatch(actions.successfulOperation(msgs.ACCOUNT_UPDATED))
+                history.push('/login');
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000)
+            })
+            .catch(error => {
+                console.log(error.response);
+                history.push('/dashboard/account/edit');
+                dispatch(actions.updateUserInfoError(error));
+                error.response.data.message && dispatch(actions.failedOperation(error));
+            })
+    }
+};
+
 
 // shoppinglists
 export const createShoppingList = (history, data) => {

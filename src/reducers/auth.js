@@ -31,7 +31,7 @@ const Authenticate = (
             });
 
         case types.USER_INFO_ERROR:
-            return action.payload;
+            return {edit_errors: action.payload}
 
         default:
             return state
