@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import Dashboard from '../components/auth/Dashboard';
+
 import AlertMessages from '../containers/utils/messages'
 
 import SignUp from '../containers/auth/Signup';
@@ -63,6 +65,7 @@ class App extends Component {
                         <Route path="/shoppinglists/:id/edit" component={EditShoppingList}/>
                         <Route path="/shoppinglists/:id" component={ShoppingListDetail}/>
                         <Route path="/shoppinglists" component={ShoppingList}/>
+                        <Route path="/dashboard" component={Dashboard}/>
                     </Switch>
                 </div>
             </div>
