@@ -2,6 +2,13 @@
     left: 10px;
 }
 
+.update-account-btn,
+.delete-account-btn,
+.update-account-password-btn
+{
+    margin-left: 7px;
+}
+
 form.signup-form,
 form.shoppinglist-create,
 form.shoppinglist-edit,

@@ -54,9 +54,10 @@ class Dashboard extends React.Component {
                         <h4 className="text-center">My Account</h4>
                         <div className="well account-info">
                             {this.renderUserInfo()}
-                            <div>
-                                <Link className="btn btn-info btn-xs pull-left" to="/dashboard/account/edit">Update Account</Link>
-                                <Link className="btn btn-danger btn-xs pull-right" to="/dashboard/account/delete">Delete Account</Link>
+                            <div className="text-center">
+                                <Link className="btn btn-success btn-xs update-account-btn" to="/dashboard/account/edit">Update Account</Link>
+                                <Link className="btn btn-info btn-xs update-account-password-btn" to="/forgot-password">Change Password</Link>
+                                <Link className="btn btn-danger btn-xs delete-account-btn" to="/dashboard/account/delete">Delete Account</Link>
                             </div>
                         </div>
                     </div>
