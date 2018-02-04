@@ -3,6 +3,8 @@ import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Dashboard from '../components/auth/Dashboard';
+import GetResetToken from '../components/auth/password/GetResetToken';
+import ShowResetToken from '../components/auth/password/ShowToken';
 
 import AlertMessages from '../containers/utils/messages'
 
@@ -24,6 +26,7 @@ import SearchShoppingLists from '../containers/search/Search';
 import AppLinks, { ShoppingListsLink } from './includes/AppLinks';
 
 import '../static/App.css';
+import ShowToken from "./auth/password/ShowToken";
 
 class App extends Component {
     render() {
@@ -67,6 +70,8 @@ class App extends Component {
                         <Route path="/shoppinglists/:id" component={ShoppingListDetail}/>
                         <Route path="/shoppinglists" component={ShoppingList}/>
                         <Route path="/dashboard/account/edit" component={EditAccount}/>
+                        <Route path="/forgot-password/reset-token/show" component={ShowResetToken}/>
+                        <Route path="/forgot-password" component={GetResetToken}/>
                         <Route path="/dashboard" component={Dashboard}/>
                     </Switch>
                 </div>
