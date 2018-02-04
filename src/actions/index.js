@@ -45,6 +45,20 @@ export const LogoutUserError = error => {
     }
 }
 
+export const fetchUserInfoSuccess = response => {
+    return {
+        type: types.USER_INFO,
+        payload: response
+    }
+}
+
+export const fetchUserInfoError = error => {
+    return {
+        type: types.USER_INFO_ERROR,
+        payload: error.data
+    }
+}
+
 // SHOPPING LISTS ACTION CREATORS
 export const createShoppingListSuccess = response => {
     return {
