@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { backButton } from "../../common/BackButton";
 
 const ShowResetToken = (props) => {
     if (props.auth.password_reset_token) {
@@ -31,4 +32,4 @@ const mapStateToProps = ({auth}) => {
 };
 
 
-export default connect(mapStateToProps, null)(ShowResetToken);
+export default connect(mapStateToProps, null)(backButton(ShowResetToken));

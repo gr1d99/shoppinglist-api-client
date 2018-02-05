@@ -5,7 +5,7 @@ export const backButton = WrappedClass => {
         render() {
             return (
                 <div className="col-md-12">
-                    <button className="btn btn-default btn-xs pull-left" onClick={this.props.history.goBack}>Go back</button>
+                    <button className="btn btn-default btn-xs pull-left" onClick={this.props.history.goBack}><span className="glyphicon glyphicon-arrow-left"></span> Go back</button>
                     <WrappedClass {...this.props}/>
                 </div>
             )

@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Truncate from 'react-truncate';
 
-
 import { loginRequired } from "../auth/helpers";
 import { searchShoppingLists } from "../../dispatchers";
+import { backButton } from "../../components/common/BackButton";
 
 
 class SearchShoppingLists extends React.Component {
@@ -19,7 +19,6 @@ class SearchShoppingLists extends React.Component {
     handleSearchTermChange = (e) => {
         const key = e.target.name;
         let value = e.target.value;
-
         let obj = {};
 
         obj[key] = value;
@@ -29,10 +28,6 @@ class SearchShoppingLists extends React.Component {
     handleSearch = (e) => {
         e.preventDefault();
         this.props.searchShoppingLists(this.props.history, this.state.term)
-    };
-
-    componentWillUpdate = () => {
-        console.log('update', this.props.search)
     };
 
     handleClick = url => e => {
@@ -51,25 +46,31 @@ class SearchShoppingLists extends React.Component {
                 previous_page_url
             } = this.props.search.results;
 
+
             switch (location) {
                 case 'up':
                     return (
-                        <div className="pull-right">
-                            <h4>{!isNaN(items_in_page) ? `${items_in_page} Items found` : ''}</h4>
+                        <div className="">
+                            <h4 className="results-count">{!isNaN(items_in_page) ? `${items_in_page} Items found` : ''}</h4>
                         </div>
                     );
 
                 case 'down':
-                    if (next_page > 1) {
+                    if (next_page > 1 || current_page > 1) {
                         return (
                             <div>
-                                <button onClick={this.handleClick(next_page_url)} className="pull-right">Next Page { next_page }</button>
-                                <span className="text-center page-info">Page { current_page } of { total_pages }</span>
-                                <button onClick={this.handleClick(previous_page_url)} className="pull-left">Previous Page</button>
-                            </div>)
+                                <nav aria-label="">
+                                    <ul className="pager">
+                                        <li className="next pull-left"><Link to='/' onClick={this.handleClick(previous_page_url)} className="pull-left"><span aria-hidden="true">&larr;</span> Previous </Link></li>
+                                        <span className="text-center page-info">Page {current_page} of {total_pages}</span>
+                                        <li className="previous pull-right"><Link to='/' onClick={this.handleClick(next_page_url)}> <span aria-hidden="true">&rarr;</span> Next</Link></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        )
+                    } else {
+                        return ''
                     }
-
-                    return '';
 
                 default:
                     return ''
@@ -105,18 +106,21 @@ class SearchShoppingLists extends React.Component {
 
     render () {
         return (
-            <div className="row">
-                <div className="col-lg-12">
-                    <form className="navbar-form navbar-left" onSubmit={this.handleSearch}>
+            <div className="row shopping-lists">
+                <div className="col-lg-12 search">
+                    <hr/>
+                    <form className="navbar-form navbar-left pull-right" onSubmit={this.handleSearch}>
                         <div className="form-group">
                             <input type="text" name="term" onChange={this.handleSearchTermChange} className="form-control" placeholder="Search"/>
                         </div>
-                        <button to='/shoppinglists/search'
-                                type="submit"
-                                className="btn btn-default">
+                        <button
+                            type="submit"
+                            className="btn btn-default">
                             Search
                         </button>
                     </form>
+                </div>
+                <div className="col-lg-12">
                     {this.pageMetaData('up')}
                 </div>
                 <div className="col-lg-12">
@@ -140,4 +144,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(SearchShoppingLists));
+export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(backButton(SearchShoppingLists)));

@@ -2,6 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
 
+import { backButton } from "../../common/BackButton";
 import SubmitButton  from '../../common/button';
 import { getPasswordResetToken } from "../../../dispatchers";
 
@@ -85,4 +86,4 @@ const mapStateToProps = ({auth}) => {
     return {auth}
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(GetResetToken)
+export default connect(mapStateToProps, mapDispatchToProps)(backButton(GetResetToken));

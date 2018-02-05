@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
 
 import SubmitButton  from '../../components/common/button';
+import { backButton } from "../../components/common/BackButton";
 import { updateUserInfo } from "../../dispatchers";
 import { loginRequired } from "./helpers";
 
@@ -102,4 +103,4 @@ const mapStateToProps = ({auth, cleanup}) => {
     return {auth, cleanup}
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(Edit))
+export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(backButton(Edit)));
