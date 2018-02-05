@@ -29,8 +29,11 @@ export const loginRequired = (WrappedComponent) => {
     // ensures that the wrapped component can be accessed only when authenticated
 
     return class LoginRequired extends React.Component {
-        componentWillMount = () => {
+        constructor(props){
+            super(props);
+
             const { isAuthenticated } = this.props.auth;
+
             if (!isAuthenticated) {
                 this.props.history.push('/login');
             }

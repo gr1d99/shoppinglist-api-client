@@ -1,7 +1,9 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { bindActionCreators } from 'redux'
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 import { getUserShoppingListDetail, deleteShoppingList } from "../../dispatchers";
 import { loginRequired } from "../auth/helpers";
@@ -26,10 +28,13 @@ class ShoppingListDetailComponent extends React.Component {
     };
 
     handleDelete = (e) => {
-        e.preventDefault()
-        this.props.deleteShoppingList(
-            this.props.history,
-            this.props.match.params.id)
+        e.preventDefault();
+        confirmAlert({
+            title: 'Click confirm to delete',
+            confirmLabel: 'Confirm',
+            cancelLabel: 'Cancel',
+            onConfirm: () => this.props.deleteShoppingList(this.props.history, this.props.match.params.id),
+        });
     };
 
     render() {
@@ -37,6 +42,7 @@ class ShoppingListDetailComponent extends React.Component {
         if (this.props.shoppingList.shlDetail) {
             const { name,
                 description,
+                total,
                 created_on,
                 updated_on,
                 total_items,
@@ -50,6 +56,8 @@ class ShoppingListDetailComponent extends React.Component {
 
                     <div className="well">
                         { description }
+                        <hr/>
+                        <strong>Estimated total cost for all items <label className='label label-success'>KES {total}</label></strong>
                         <hr/>
                         <Link
                             className="btn btn-info btn-xs"

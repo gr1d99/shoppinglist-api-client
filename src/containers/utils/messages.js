@@ -57,7 +57,7 @@ class AlertMessages extends React.Component {
                 );
 
             default:
-                return ''
+                return <div></div>
         }
     };
 

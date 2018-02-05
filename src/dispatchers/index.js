@@ -52,13 +52,13 @@ export const LoginUser = (history, data) => {
             })
             .then(response => {
                 dispatch(actions.LoginUserSuccess(response));
-                dispatch(actions.successfulOperation(msgs.LOGGED_IN))
-                history.push("/")
+                dispatch(actions.successfulOperation(msgs.LOGGED_IN));
+                history.push("/");
                 window.location.reload()
             })
             .catch(error => {
                 dispatch(actions.LoginUserError(error));
-                dispatch(actions.failedOperation(error))
+                dispatch(actions.failedOperation(error));
                 history.push("/login")
             })
     }
@@ -523,7 +523,7 @@ export const searchShoppingLists = (history, term, url=null) => {
     const _prefix = '/shopping-lists/search';
     let apiKey = localStorage.getItem('apiKey');
     const finalUrl = !url ? `${URL}${_prefix}?q=${term}&limit=${SEARCH_LIMIT}&page=${PAGE}`: url;
-    console.log(url)
+    console.log('url------', url)
 
     return dispatch => {
         axios.get(

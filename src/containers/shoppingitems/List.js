@@ -2,6 +2,8 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { confirmAlert } from "react-confirm-alert";
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 import { fetchShoppingItems, getUserShoppingListItemDetail, deleteShoppingItem } from "../../dispatchers";
 import { itemToEditId } from "../../actions";
@@ -43,14 +45,16 @@ class List extends React.Component {
     };
 
     handleDelete = (shlId, itemid) => e => {
-        this.props.deleteShoppingItem(
-            this.props.history,
-            shlId,
-            itemid)
+        confirmAlert({
+            title: 'Click confirm to delete',
+            confirmLabel: 'Confirm',
+            cancelLabel: 'Cancel',
+            onConfirm: () => this.props.deleteShoppingItem(this.props.history, shlId, itemid)
+        });
     };
 
     renderBoughtField = status => {
-        return <input type="checkbox" disabled="disabled" checked={status}/>
+        return <span className={status ? 'glyphicon glyphicon-ok-circle': 'glyphicon glyphicon-remove-sign'}></span>
     };
 
     pageMetaData = (location) => {
@@ -149,7 +153,7 @@ class List extends React.Component {
                         <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Price</th>
+                            <th>Price (Kes)</th>
                             <th>Bought</th>
                             <th>Quantity Description</th>
                             <th>Date Added</th>

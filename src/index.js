@@ -9,6 +9,8 @@ import thunk from 'redux-thunk';
 import App from './components/App';
 import ShoppingListApp from './reducers';
 
+import './static/index.css'
+
 import registerServiceWorker from './utils/registerServiceWorker';
 
 const createStoreMiddleware = applyMiddleware(ReduxPromise, thunk)(createStore);

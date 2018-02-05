@@ -34,7 +34,9 @@ const Authenticate = (
             });
 
         case types.USER_INFO_ERROR:
-            return {edit_errors: action.payload};
+            return Object.assign({}, state, {
+                edit_errors: action.payload
+            });
 
         case types.GET_RESET_TOKEN:
             return Object.assign({}, state, {

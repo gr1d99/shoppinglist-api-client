@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Truncate from 'react-truncate';
+import LinesEllipsis from 'react-lines-ellipsis'
 
 import { getUserShoppingLists } from "../../dispatchers";
 import { loginRequired } from "../auth/helpers";
@@ -48,14 +49,16 @@ class List extends React.Component {
                 );
 
             case 'down':
-                if (next_page > 1) {
+                if (next_page > 1 || current_page > 1) {
                     return (
                         <div>
-                            <button onClick={this.handleClick(next_page_url)} className="pull-right">Next
-                                Page {next_page}</button>
-                            <span className="text-center page-info">Page {current_page} of {total_pages}</span>
-                            <button onClick={this.handleClick(previous_page_url)} className="pull-left">Previous Page
-                            </button>
+                            <nav aria-label="">
+                                <ul className="pager">
+                                    <li className="next pull-left"><Link to='/' onClick={this.handleClick(previous_page_url)} className="pull-left"><span aria-hidden="true">&larr;</span> Previous </Link></li>
+                                    <span className="text-center page-info">Page {current_page} of {total_pages}</span>
+                                    <li className="previous pull-right"><Link to='/' onClick={this.handleClick(next_page_url)}> <span aria-hidden="true">&rarr;</span> Next</Link></li>
+                                </ul>
+                            </nav>
                         </div>
                     )
                 } else {
@@ -76,7 +79,15 @@ class List extends React.Component {
                             <div className="panel panel-default">
                                 <div className="panel-heading">
                                     <h6 className="text-center">
-                                        <Link to={`/shoppinglists/${shl.id}`}>{shl.name.toUpperCase()}</Link>
+                                        <Link to={`/shoppinglists/${shl.id}`}>
+                                        <LinesEllipsis
+                                            text={shl.name.toUpperCase()}
+                                            maxLine='1'
+                                            ellipsis='...'
+                                            trimRight
+                                            basedOn='letters'
+                                        />
+                                        </Link>
                                     </h6>
                                 </div>
                                 <div className="panel-body shoppinglist-box">
@@ -93,7 +104,7 @@ class List extends React.Component {
 
     render () {
         return (
-            <div className="row">
+            <div className="row shopping-lists">
                 <div className="col-lg-12">
                     {this.pageMetaData('up')}
                 </div>
