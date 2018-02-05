@@ -2,9 +2,11 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { confirmAlert } from "react-confirm-alert";
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
+import { backButton } from "../common/BackButton";
 import { loginRequired } from "../../containers/auth/helpers";
-
 import { fetchUserInfo, deleteUserAccount } from "../../dispatchers";
 
 
@@ -47,7 +49,12 @@ class Dashboard extends React.Component {
     };
 
     handleDeleteAccount = (e) => {
-        this.props.deleteUserAccount(this.props.history)
+        confirmAlert({
+            title: 'Click confirm to delete',
+            confirmLabel: 'Confirm',
+            cancelLabel: 'Cancel',
+            onConfirm: () => this.props.deleteUserAccount(this.props.history)
+        });
     };
 
     render () {
@@ -83,4 +90,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(Dashboard))
+export default connect(mapStateToProps, mapDispatchToProps)(loginRequired(backButton(Dashboard)));
