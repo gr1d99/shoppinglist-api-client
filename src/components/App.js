@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import HomePage from '../components/Home';
 import Dashboard from '../components/auth/Dashboard';
 import GetResetToken from '../components/auth/password/GetResetToken';
 import ShowResetToken from '../components/auth/password/ShowToken';
@@ -34,7 +35,7 @@ class App extends Component {
         <BrowserRouter>
             <div>
                 <nav className="navbar navbar-default">
-                    <div className="container-fluid">
+                    <div className="container-fluid container">
                         <div className="navbar-header">
                             <button type="button" className="navbar-toggle collapsed" data-toggle="collapse"
                                     data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -43,7 +44,7 @@ class App extends Component {
                                 <span className="icon-bar"></span>
                                 <span className="icon-bar"></span>
                             </button>
-                            <Link className="navbar-brand" to="/">Shopping List Client</Link>
+                            <Link className="navbar-brand" to="/"><span className="glyphicon glyphicon-home"></span> Shopping List</Link>
                             <ShoppingListsLink isAuthenticated={this.props.auth.isAuthenticated}/>
                         </div>
 
@@ -57,7 +58,7 @@ class App extends Component {
                         <AlertMessages/>
                     </div>
                     <Switch>
-                        <Route exact path="/" component={() => ('')}/>
+                        <Route exact path="/" component={HomePage}/>
                         <Route path="/signup" component={SignUp}/>
                         <Route path="/login" component={Login}/>
                         <Route path="/logout" component={Logout}/>
@@ -76,6 +77,11 @@ class App extends Component {
                         <Route path="/dashboard" component={Dashboard}/>
                     </Switch>
                 </div>
+                <footer className="navbar-default navbar-fixed-bottom">
+                    <div className="container-fluid">
+                        <p><span className="glyphicon glyphicon-copyright-mark"></span> Shopping List 2018</p>
+                    </div>
+                </footer>
             </div>
         </BrowserRouter>
     );
