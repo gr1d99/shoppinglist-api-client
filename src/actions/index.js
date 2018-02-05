@@ -304,10 +304,13 @@ export const suspiciousOperation = error => {
 export const failedOperation = error => {
     let payload = null;
     if (error.response.data.message.token) {
-        payload = error.response.data.message.token
-    } else if(error.response.data.message.password) {
-        payload = error.response.data.message.password
-    } else {
+        payload = error.response.data.message.token;
+    }
+    if(error.response.data.message.password) {
+        payload = error.response.data.message.password;
+    }
+
+    if (error.response.data.message) {
         payload = error.response.data.message
     }
 
@@ -315,7 +318,7 @@ export const failedOperation = error => {
         type: types.ERROR_ALERT,
         payload: payload
     }
-}
+};
 
 export const clearAlertMessage = () => {
     return {
