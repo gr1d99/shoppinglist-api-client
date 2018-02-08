@@ -36,7 +36,7 @@ export const shoppingItemReducer = (state=initialState, action) => {
         case types.ITEM_ID:
             return Object.assign({}, state, {
                 shlId: action.payload
-            })
+            });
 
         default:
             return state

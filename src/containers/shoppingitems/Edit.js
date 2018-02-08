@@ -98,7 +98,9 @@ class EditShoppingListItem extends React.Component {
                                 name="price"
                                 placeholder="Price"
                                 onChange={this.handleChange}
-                                value={this.state.price} step=".01"/>
+                                value={this.state.price}
+                                step=".01"
+                                min={0}/>
                             {this.getErrorMessages('price')}
                         </div>
                         <div className="form-group">

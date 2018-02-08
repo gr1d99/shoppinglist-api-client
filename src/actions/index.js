@@ -316,7 +316,7 @@ export const failedOperation = error => {
 
     return {
         type: types.ERROR_ALERT,
-        payload: payload
+        payload: error.payload
     }
 };
 

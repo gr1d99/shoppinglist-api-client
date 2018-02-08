@@ -21,7 +21,11 @@ export const registerUser = (history, data) => {
     return dispatch => {
         axios.post(
             `${URL}${_prefix}`, registerData, {
-                headers: {'Content-Type': DEFAULT_HEADER }
+                headers: {
+                    'Content-Type': DEFAULT_HEADER,
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'
+                }
             })
             .then(response => {
                 dispatch(actions.RegisterUserSuccess(response));
@@ -30,6 +34,7 @@ export const registerUser = (history, data) => {
                 history.push('/login');
             })
             .catch(error => {
+                console.log(error.response)
                 history.push('/signup');
                 dispatch(actions.RegisterUserError(error))
                 dispatch(actions.failedOperation(error))
@@ -48,7 +53,11 @@ export const LoginUser = (history, data) => {
     return dispatch => {
         axios.post(
             `${URL}${_prefix}`, loginData, {
-                headers: {'Content-Type': DEFAULT_HEADER }
+                headers: {
+                    'Content-Type': DEFAULT_HEADER,
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'
+                }
             })
             .then(response => {
                 dispatch(actions.LoginUserSuccess(response));
@@ -73,7 +82,8 @@ export const LogoutUser = (history) => {
             `${URL}${_prefix}`, {
                 headers: {
                     'Content-Type': DEFAULT_HEADER,
-                    'x-access-token': apiKey
+                    'x-access-token': apiKey,
+                    'Access-Control-Allow-Origin': '*'
                 }
             })
             .then(response => {
@@ -99,7 +109,8 @@ export const fetchUserInfo = (history) => {
         finalUrl, {
             headers: {
                 'Content-Type': DEFAULT_HEADER,
-                'x-access-token': apiKey
+                'x-access-token': apiKey,
+                'Access-Control-Allow-Origin': '*'
             }
         })
         .then(response => {

@@ -27,6 +27,10 @@ class ShoppingListDetailComponent extends React.Component {
         }
     };
 
+    componentWillReceiveProps = (nextProps) => {
+        console.log(this.props.shoppingList.shlDetail)
+    }
+
     handleDelete = (e) => {
         e.preventDefault();
         confirmAlert({

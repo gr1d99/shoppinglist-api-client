@@ -30,7 +30,7 @@ class CreateShoppingList extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.createShoppingList(this.props.history, this.state)
-    }
+    };
 
     getErrorMessages = field => {
         if (this.props.shoppingList.error_messages) {

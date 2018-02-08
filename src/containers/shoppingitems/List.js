@@ -73,7 +73,7 @@ class List extends React.Component {
                     return <span>({total_items > 0 ? total_items : 0})</span>;
 
                 case 'down':
-                    if (next_page > 0) {
+                    if (next_page > 0 || current_page > 1) {
                         return (
                             <div>
                                 <button onClick={this.handleClick(next_page_url)} className="pull-right">Next

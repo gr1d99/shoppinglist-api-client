@@ -17,7 +17,8 @@ class CreateShoppingItem extends React.Component {
         this.state = {
             name: '',
             price: '',
-            quantity: ''
+            quantity: '',
+            price_error: ''
         }
     }
 
@@ -25,6 +26,10 @@ class CreateShoppingItem extends React.Component {
         const key = e.target.name;
         const value = e.target.value;
         let obj = {};
+
+        const reg = /^[0-9]+/;
+
+        key === 'price' && !value.match(reg) && this.setState({price_error: 'not a valid price'});
 
         obj[key] = value;
         this.setState(obj);
@@ -79,8 +84,11 @@ class CreateShoppingItem extends React.Component {
                                     name="price"
                                     placeholder="Price"
                                     onChange={this.handleChange}
-                                    value={this.state.price} step=".01"/>
+                                    value={this.state.price} step=".01"
+                                    min={0}/>
+
                                 {this.getErrorMessages('price')}
+                                <p className="text-danger">{this.state.price_error}</p>
                             </div>
                             <div className="form-group">
                                 <input
